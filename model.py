@@ -42,7 +42,8 @@ class Client:
     def name(self) -> str:
         return self.name
 
-    def get_charge(self, amount, rental: Rental) -> float:
+    def get_charge(self, rental: Rental) -> float:
+        amount = 0
         if rental.book.price_code == Book.REGULAR:
                 amount += 2
                 if rental.days_rented > 2:
@@ -64,8 +65,7 @@ class Client:
             amount = 0
             
             # determine amounts for each line
-            new_amount = self.get_charge(amount, rental)
-            amount = new_amount
+            amount += self.get_charge(rental)        
 
             # add frequent renter points
             frequent_renter_points += 1
